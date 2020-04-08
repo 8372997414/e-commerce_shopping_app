@@ -16,7 +16,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +53,12 @@ public class HomeFragment extends Fragment {
     private ImageView stripAdImage;
     private ConstraintLayout stripAdContainer;
     ////////////Strip Ad
+
+    //////////// Horizontal Product Layout
+    private TextView horizontalLayoutTitle;
+    private Button horizontalLayoutViewAllBtn;
+    private RecyclerView horizontalRecyclerView;
+    //////////// Horizontal Product Layout
 
 
 
@@ -88,25 +96,20 @@ public class HomeFragment extends Fragment {
         bannerSliderViewPager = view.findViewById(R.id.banner_slider_viewPager);
 
         sliderModelList = new ArrayList<SliderModel>();
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner2,"#077AE4"));
 
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#faf0f0"));
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#faf0f0"));
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#faf0f0"));
 
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner2,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner3,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner2,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner3,"#077AE4"));
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#faf0f0"));
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner2,"#faf0f0"));
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner3,"#faf0f0"));
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#faf0f0"));
 
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#faf0f0"));
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#faf0f0"));
+        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#faf0f0"));
 
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner2,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#077AE4"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#077AE4"));
 
         SliderAdapter sliderAdapter = new SliderAdapter(sliderModelList);
         bannerSliderViewPager.setAdapter(sliderAdapter);
@@ -154,7 +157,7 @@ public class HomeFragment extends Fragment {
 
        ////////////////////Banner Slider
 
-        ////////////Strip Ad
+        ////////////Strip  Ad
 
         stripAdImage = view.findViewById(R.id.strip_ad_image);
         stripAdContainer = view.findViewById(R.id.strip_ad_container);
@@ -162,8 +165,34 @@ public class HomeFragment extends Fragment {
         stripAdImage.setImageResource(R.drawable.sliderbanner);
         stripAdContainer.setBackgroundColor(Color.parseColor("#000000"));
 
-
         ////////////Strip Ad
+
+        //////////// Horizontal Product Layout
+
+        horizontalLayoutTitle = view.findViewById(R.id.horizontal_scroll_layout_title);
+        horizontalLayoutViewAllBtn = view.findViewById(R.id.horizontal_scroll_viewall_button);
+        horizontalRecyclerView = view.findViewById(R.id.horizontal_scroll_layout_recyclerView);
+
+        List<HorizontalProdutScrollModel> horizontalProdutScrollModelList =new ArrayList<>();
+        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+
+        HorizontalProductScrollAdapter horizontalProductScrollAdapter = new HorizontalProductScrollAdapter(horizontalProdutScrollModelList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        horizontalRecyclerView.setLayoutManager(linearLayoutManager);
+
+        horizontalRecyclerView.setAdapter(horizontalProductScrollAdapter);
+        horizontalProductScrollAdapter.notifyDataSetChanged();
+        //////////// Horizontal Product Layout
+
+
 
         return view;
     }
