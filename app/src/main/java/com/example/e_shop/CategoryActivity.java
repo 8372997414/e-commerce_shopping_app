@@ -1,78 +1,35 @@
 package com.example.e_shop;
 
-
-import android.content.Context;
-import android.graphics.Color;
-import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
-public class HomeFragment extends Fragment {
-
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+public class CategoryActivity extends AppCompatActivity {
 
     private RecyclerView categoryRecyclerView;
-    private CategoryAdapter categoryAdapter;
-    private RecyclerView testing;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_home, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_category);
+        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        categoryRecyclerView = view.findViewById(R.id.category_recyclerview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        categoryRecyclerView.setLayoutManager(layoutManager);
+        String title = getIntent().getStringExtra("CategoryName");
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        final List<CategoryModel> categoryModelList = new ArrayList<CategoryModel>();
-        categoryModelList.add(new CategoryModel("link","Home"));
-        categoryModelList.add(new CategoryModel("link","Electronic"));
-        categoryModelList.add(new CategoryModel("link","Appliances"));
-        categoryModelList.add(new CategoryModel("link","Furniture"));
-        categoryModelList.add(new CategoryModel("link","Toys"));
-        categoryModelList.add(new CategoryModel("link","Home"));
-        categoryModelList.add(new CategoryModel("link","Electronic"));
-        categoryModelList.add(new CategoryModel("link","Appliances"));
-        categoryModelList.add(new CategoryModel("link","Furniture"));
-        categoryModelList.add(new CategoryModel("link","Toys"));
-
-
-        categoryAdapter = new CategoryAdapter(categoryModelList);
-        categoryRecyclerView.setAdapter(categoryAdapter);
-        categoryAdapter.notifyDataSetChanged();
-
+        categoryRecyclerView = findViewById(R.id.category_recyclerview);
 
         ////////////////////Banner Slider
-
-
         List<SliderModel> sliderModelList = new ArrayList<SliderModel>();
 
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#faf0f0"));
@@ -87,8 +44,7 @@ public class HomeFragment extends Fragment {
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#faf0f0"));
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#faf0f0"));
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#faf0f0"));
-
-       ////////////////////Banner Slider
+        ////////////////////Banner Slider
 
         //////////// Horizontal Product Layout
 
@@ -105,10 +61,8 @@ public class HomeFragment extends Fragment {
         //////////// Horizontal Product Layout
 
         ///////////////////////Homepage Recyclerview
-
-        testing = view.findViewById(R.id.home_page_recyclerview);
-        LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
-        testing.setLayoutManager(testingLayoutManager);
+        LinearLayoutManager testingLayoutManager = new LinearLayoutManager(this);
+        categoryRecyclerView.setLayoutManager(testingLayoutManager);
 
         List<HomePageModel> homePageModelList = new ArrayList<>();
         homePageModelList.add(new HomePageModel(0,sliderModelList));
@@ -116,19 +70,41 @@ public class HomeFragment extends Fragment {
         homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
         homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(0,sliderModelList));
         homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
         homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
-        homePageModelList.add(new HomePageModel(0,sliderModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
 
         HomePageAdapter adapter = new HomePageAdapter(homePageModelList);
-        testing.setAdapter(adapter);
+        categoryRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
         ///////////////////////Homepage Recyclerview
 
-        return view;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.search_icon, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.main_search_icon) {
+            //todo: search
+            return true;
+        }else if (id == android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.e_shop;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,10 +28,10 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder viewHolder, int position) {
         String icon = categoryModelList.get(position).getCategoryIconlink();
         String name = categoryModelList.get(position).getCategoryName();
-        ViewHolder.setCategoryName(name);
+        viewHolder.setCategory(name,position);
 
     }
 
@@ -54,8 +55,19 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             ////todo: set categoryicon here;
         }
 
-        private static void setCategoryName(String name){
+        private void setCategory(final String name, final int position){
             categoryName.setText(name);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (position != 0) {
+                        Intent categoryIntent = new Intent(itemView.getContext(), CategoryActivity.class);
+                        categoryIntent.putExtra("categoryName", name);
+                        itemView.getContext().startActivity(categoryIntent);
+                    }
+                }
+            });
         }
     }
 }
