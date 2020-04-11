@@ -43,7 +43,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView categoryIcon;
-        private static TextView categoryName;
+        private  TextView categoryName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
