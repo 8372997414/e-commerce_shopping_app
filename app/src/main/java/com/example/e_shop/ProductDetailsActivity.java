@@ -3,24 +3,24 @@ package com.example.e_shop;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
-
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
-    private ViewPager productImageViewPager;
+    private ViewPager productImagesViewPager;
     private TabLayout viewpagerIndicator;
+
+    private ViewPager productDetailsViewpager;
+    private TabLayout productDetailsTablayout;
 
     private static boolean ALLREDY_ADDED_TO_WISHLIST = false;
     private FloatingActionButton addToWishlistBtn;
@@ -35,9 +35,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        productImageViewPager = findViewById(R.id.product_images_viewpager);
+        productImagesViewPager = findViewById(R.id.product_images_viewpager);
         viewpagerIndicator = findViewById(R.id.viewpager_indicater);
         addToWishlistBtn = findViewById(R.id.add_to_wishlist_btn);
+        productDetailsViewpager = findViewById(R.id.product_details_viewpager);
+        productDetailsTablayout = findViewById(R.id.product_detials_tablayout);
 
         List<Integer> productImages = new ArrayList<>();
         productImages.add(R.drawable.profile_img);
@@ -46,9 +48,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productImages.add(R.drawable.forgotton_pw);
 
         ProductImagesAdapter productImagesAdapter = new ProductImagesAdapter(productImages);
-        productImageViewPager.setAdapter(productImagesAdapter);
+        productImagesViewPager.setAdapter(productImagesAdapter);
 
-        viewpagerIndicator.setupWithViewPager(productImageViewPager,true);
+        viewpagerIndicator.setupWithViewPager(productImagesViewPager,true);
 
         addToWishlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +62,25 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     ALLREDY_ADDED_TO_WISHLIST = true;
                     addToWishlistBtn.setSupportImageTintList(getResources().getColorStateList(R.color.colorPrimary));
                 }
+            }
+        });
+
+        productDetailsViewpager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(),productDetailsTablayout.getTabCount()));
+        productDetailsViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(productDetailsTablayout));
+        productDetailsTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                productDetailsViewpager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
     }

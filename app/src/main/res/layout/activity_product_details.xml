@@ -41,7 +41,11 @@
             android:orientation="vertical">
 
             <include layout="@layout/product_images_layout"/>
+
             <include layout="@layout/reward_with_product_layout"/>
+
+            <include layout="@layout/product_discription_layout"/>
+
 
 
         </LinearLayout>
