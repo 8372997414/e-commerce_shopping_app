@@ -51,9 +51,6 @@
             <include layout="@layout/ratings_layout"/>
 
 
-
-
-
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
