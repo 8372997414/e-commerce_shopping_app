@@ -16,7 +16,12 @@ import android.widget.FrameLayout;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int HOME_FRAGMENT = 0;
+    private static final int CART_FRAGMENT = 1;
+
     private FrameLayout frameLayout;
+    private static int currentFragment;
+    private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,18 +31,17 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
         frameLayout =findViewById(R.id.main_framelayout);
-        setFragment(new HomeFragment());
-
-
+        setFragment(new HomeFragment(),HOME_FRAGMENT);
     }
 
     @Override
@@ -53,7 +57,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        if (currentFragment == HOME_FRAGMENT){
+            getMenuInflater().inflate(R.menu.main, menu);
+        }
         return true;
     }
 
@@ -72,12 +78,21 @@ public class MainActivity extends AppCompatActivity
             //todo: notification
             return true;
         } else if (id == R.id.main_cart_icon) {
-            //todo: card
+            myCart();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void myCart() {
+        invalidateOptionsMenu();
+        setFragment(new MyCardFragment(),CART_FRAGMENT);
+        navigationView.getMenu().getItem(3).setChecked(true);
+
+    }
+
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -86,12 +101,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_mall) {
-
+            setFragment(new HomeFragment(),HOME_FRAGMENT);
         } else if (id == R.id.nav_my_orders) {
 
         } else if (id == R.id.nav_my_rewards) {
 
         } else if (id == R.id.nav_My_cart) {
+            myCart();
 
         } else if (id == R.id.nav_My_Wishlist) {
 
@@ -104,7 +120,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void setFragment(Fragment fragment){
+    private void setFragment(Fragment fragment,int fragmentNo){
+        currentFragment = fragmentNo;
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(frameLayout.getId(),fragment);
         fragmentTransaction.commit();
