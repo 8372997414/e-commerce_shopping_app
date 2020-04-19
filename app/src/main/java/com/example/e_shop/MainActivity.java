@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity
 
     private FrameLayout frameLayout;
     private ImageView actionBarLogo;
-    private static int currentFragment;
+    private static int currentFragment = -1;
     private NavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         if (currentFragment == HOME_FRAGMENT){
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             getMenuInflater().inflate(R.menu.main, menu);
         }
         return true;
@@ -107,7 +108,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_mall) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
             actionBarLogo.setVisibility(View.VISIBLE);
             invalidateOptionsMenu();
             setFragment(new HomeFragment(),HOME_FRAGMENT);
