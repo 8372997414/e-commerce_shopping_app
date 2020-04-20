@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/orader_indicater"
+        android:id="@+id/order_indicater"
         android:layout_width="10dp"
         android:layout_height="10dp"
         android:layout_marginStart="16dp"
@@ -44,15 +44,15 @@
         app:srcCompat="@drawable/default_dot" />
 
     <TextView
-        android:id="@+id/orader_delivered_date"
+        android:id="@+id/order_delivered_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Delivered on Mon, 15th jun 2020"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/orader_indicater"
-        app:layout_constraintStart_toEndOf="@+id/orader_indicater"
-        app:layout_constraintTop_toTopOf="@+id/orader_indicater" />
+        app:layout_constraintBottom_toBottomOf="@+id/order_indicater"
+        app:layout_constraintStart_toEndOf="@+id/order_indicater"
+        app:layout_constraintTop_toTopOf="@+id/order_indicater" />
 
     <TextView
         android:id="@+id/textView19"
