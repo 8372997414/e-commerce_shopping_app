@@ -1,5 +1,6 @@
 package com.example.e_shop;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -22,19 +25,27 @@ public class MainActivity extends AppCompatActivity
     private static final int CART_FRAGMENT = 1;
     private static final int ORDERS_FRAGMENT = 2;
     private static final int WISHLIST_FRAGMENT = 3;
+    private static final int REWARDS_FRAGMENT = 4;
+
 
 
     private FrameLayout frameLayout;
     private ImageView actionBarLogo;
     private static int currentFragment = -1;
     private NavigationView navigationView;
+
+    private Window window;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
+        toolbar =(Toolbar) findViewById(R.id.toolbar);
         actionBarLogo = findViewById(R.id.actionbar_logo);
         setSupportActionBar(toolbar);
+        window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -126,6 +137,7 @@ public class MainActivity extends AppCompatActivity
             gotoFragment("My Orders",new MyCardFragment(),ORDERS_FRAGMENT);
 
         } else if (id == R.id.nav_my_rewards) {
+            gotoFragment("My Rewards",new MyRewaredsFragment(),REWARDS_FRAGMENT);
 
         } else if (id == R.id.nav_My_cart) {
             gotoFragment("My Cart",new MyCardFragment(),CART_FRAGMENT);
@@ -142,6 +154,13 @@ public class MainActivity extends AppCompatActivity
 
     private void setFragment(Fragment fragment,int fragmentNo){
         if (fragmentNo != currentFragment) {
+            if (fragmentNo != REWARDS_FRAGMENT){
+                window.setStatusBarColor(Color.parseColor("#5B04B1"));
+                toolbar.setBackgroundColor(Color.parseColor("#5B04B1"));
+            }else {
+                window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
+                toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }
             currentFragment = fragmentNo;
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
