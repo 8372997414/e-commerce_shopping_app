@@ -122,8 +122,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -134,11 +132,9 @@ public class MainActivity extends AppCompatActivity
             invalidateOptionsMenu();
             setFragment(new HomeFragment(),HOME_FRAGMENT);
         } else if (id == R.id.nav_my_orders) {
-            gotoFragment("My Orders",new MyCardFragment(),ORDERS_FRAGMENT);
-
+            gotoFragment("My Orders",new MyOrdersFragment(),ORDERS_FRAGMENT);
         } else if (id == R.id.nav_my_rewards) {
             gotoFragment("My Rewards",new MyRewaredsFragment(),REWARDS_FRAGMENT);
-
         } else if (id == R.id.nav_My_cart) {
             gotoFragment("My Cart",new MyCardFragment(),CART_FRAGMENT);
         } else if (id == R.id.nav_My_Wishlist) {
@@ -155,11 +151,11 @@ public class MainActivity extends AppCompatActivity
     private void setFragment(Fragment fragment,int fragmentNo){
         if (fragmentNo != currentFragment) {
             if (fragmentNo != REWARDS_FRAGMENT){
-                window.setStatusBarColor(Color.parseColor("#5B04B1"));
-                toolbar.setBackgroundColor(Color.parseColor("#5B04B1"));
-            }else {
                 window.setStatusBarColor(getResources().getColor(R.color.colorPrimary));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            }else {
+                window.setStatusBarColor(Color.parseColor("#5B04B1"));
+                toolbar.setBackgroundColor(Color.parseColor("#5B04B1"));
             }
             currentFragment = fragmentNo;
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();

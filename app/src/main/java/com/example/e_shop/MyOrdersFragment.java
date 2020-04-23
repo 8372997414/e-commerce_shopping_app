@@ -38,6 +38,7 @@ public class MyOrdersFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         myOrdersRecyclerView.setLayoutManager(layoutManager);
         List<MyOrderItemModel> myOrderItemModelList = new ArrayList<>();
+
         myOrderItemModelList.add(new MyOrderItemModel(R.drawable.forgotton_pw,2,"Pixel 2XL (BLACK)","Delivered on Mon , 15th JAN 2020"));
         myOrderItemModelList.add(new MyOrderItemModel(R.drawable.forgotton_pw,1,"Pixel 2XL (BLACK)","Delivered on Mon , 15th JAN 2020"));
         myOrderItemModelList.add(new MyOrderItemModel(R.drawable.forgotton_pw,3,"Pixel 2XL (BLACK)","Cancelled"));

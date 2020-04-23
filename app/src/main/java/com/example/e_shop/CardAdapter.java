@@ -84,7 +84,7 @@ public class CardAdapter extends RecyclerView.Adapter {
     class CardItemViewholder extends RecyclerView.ViewHolder{
 
         private ImageView productImage;
-        private TextView freeCoupenIcon;
+        private ImageView freeCoupenIcon;
         private TextView productTitle;
         private TextView freeCoupens;
         private TextView productPrice;

@@ -25,8 +25,6 @@ public class MyRewaredsFragment extends Fragment {
     }
 
     private RecyclerView rewardsRecyclerView;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -40,6 +38,7 @@ public class MyRewaredsFragment extends Fragment {
         rewardsRecyclerView.setLayoutManager(layoutManager);
 
        List<RewardModel> rewardModelList = new ArrayList<>();
+
         rewardModelList.add(new RewardModel("Cashback","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
         rewardModelList.add(new RewardModel("Discount","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
         rewardModelList.add(new RewardModel("Buy 1 get 1 free","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));

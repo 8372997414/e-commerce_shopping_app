@@ -20,6 +20,7 @@ public class MyOrderAdapter extends RecyclerView.Adapter<MyOrderAdapter.Viewhold
     private List<MyOrderItemModel> myOrderItemModelList;
 
     public MyOrderAdapter(List<MyOrderItemModel> myOrderItemModelList) {
+        this.myOrderItemModelList = myOrderItemModelList;
     }
 
     @NonNull
