@@ -70,6 +70,7 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout11"
         app:layout_constraintEnd_toEndOf="parent"
+        android:tint="@color/colorPrimary"
         app:layout_constraintTop_toTopOf="@+id/linearLayout11"
         app:srcCompat="@drawable/ic_settings_black_24dp" />
 
