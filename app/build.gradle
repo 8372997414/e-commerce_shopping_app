@@ -33,5 +33,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:18.0.0'
     implementation 'com.google.firebase:firebase-firestore:20.1.0'
 
+    //Image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
 }
 apply plugin: 'com.google.gms.google-services'
