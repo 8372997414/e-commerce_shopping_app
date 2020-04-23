@@ -3,12 +3,15 @@ package com.example.e_shop;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -26,10 +29,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private TabLayout productDetailsTablayout;
 
     ///////Rating Layout
-
     private LinearLayout rateNowContainer;
-
     ///////Rating Layout
+    private Button buyNowBtn;
 
     private static boolean ALLREDY_ADDED_TO_WISHLIST = false;
     private FloatingActionButton addToWishlistBtn;
@@ -49,6 +51,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         addToWishlistBtn = findViewById(R.id.add_to_wishlist_btn);
         productDetailsViewpager = findViewById(R.id.product_details_viewpager);
         productDetailsTablayout = findViewById(R.id.product_detials_tablayout);
+        buyNowBtn = findViewById(R.id.buy_now_btn);
 
         List<Integer> productImages = new ArrayList<>();
         productImages.add(R.drawable.profile_img);
@@ -108,6 +111,16 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
 
         ///////Rating Layout
+
+        buyNowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent deliveryIntent = new Intent(ProductDetailsActivity.this,DeliveryActivity.class);
+                startActivity(deliveryIntent);
+            }
+        });
+
+
 
     }
 
