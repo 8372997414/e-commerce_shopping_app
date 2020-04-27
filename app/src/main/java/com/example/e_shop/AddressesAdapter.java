@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,6 +56,7 @@ public class AddressesAdapter  extends RecyclerView.Adapter<AddressesAdapter.vie
         private TextView address;
         private TextView pincode;
         private ImageView icon;
+        private LinearLayout optionContainer;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +65,7 @@ public class AddressesAdapter  extends RecyclerView.Adapter<AddressesAdapter.vie
             address = itemView.findViewById(R.id.address);
             pincode = itemView.findViewById(R.id.pincode);
             icon = itemView.findViewById(R.id.icon_view);
+            optionContainer = itemView.findViewById(R.id.option_container);
         }
         private void  setData(String username, String userAddress, String userPincode, Boolean selected, final int position){
             fullname.setText(username);
@@ -89,6 +92,25 @@ public class AddressesAdapter  extends RecyclerView.Adapter<AddressesAdapter.vie
                     }
                 });
             }else if(MODE == MANAGE_ADDRESS){
+                optionContainer.setVisibility(View.GONE);
+                icon.setImageResource(R.drawable.vertical_dot_24dp);
+                icon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        optionContainer.setVisibility(View.VISIBLE);
+                        refreshItem(preSelectedPosition,preSelectedPosition);
+                        preSelectedPosition = position;
+
+                    }
+                });
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        refreshItem(preSelectedPosition,preSelectedPosition);
+                        preSelectedPosition = -1;
+                    }
+                });
 
             }
         }
