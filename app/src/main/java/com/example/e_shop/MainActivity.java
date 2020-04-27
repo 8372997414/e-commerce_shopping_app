@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity
     private static final int REWARDS_FRAGMENT = 4;
     private static final int ACCOUNT_FRAGMENT = 5;
 
-
-
-
     private FrameLayout frameLayout;
     private ImageView actionBarLogo;
     private static int currentFragment = -1;
