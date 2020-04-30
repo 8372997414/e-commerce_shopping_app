@@ -112,15 +112,15 @@ public class HomeFragment extends Fragment {
 
         List<HomePageModel> homePageModelList = new ArrayList<>();
         homePageModelList.add(new HomePageModel(0,sliderModelList));
+        homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
+        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
+        homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
+        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
         homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
         homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(0,sliderModelList));
+        homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
         homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
-        homePageModelList.add(new HomePageModel(0,sliderModelList));
         homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
 
         HomePageAdapter adapter = new HomePageAdapter(homePageModelList);
