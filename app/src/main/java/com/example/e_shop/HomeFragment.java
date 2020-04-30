@@ -72,21 +72,13 @@ public class HomeFragment extends Fragment {
 
         ////////////////////Banner Slider
 
-
         List<SliderModel> sliderModelList = new ArrayList<SliderModel>();
-
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#faf0f0"));
 
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#faf0f0"));
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner2,"#faf0f0"));
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner3,"#faf0f0"));
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#faf0f0"));
-
         sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#faf0f0"));
 
        ////////////////////Banner Slider
 
