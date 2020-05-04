@@ -11,6 +11,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private FrameLayout frameLayout;
     public static boolean onResetPasswordFragment = false;
+    public static boolean setSignUpFragment = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,13 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         frameLayout = findViewById(R.id.register_framelayout);
-        setDefultFragment(new SignInFragment());
+
+        if (setSignUpFragment){
+            setSignUpFragment = false;
+            setDefultFragment(new SignUpFragment());
+        }else {
+            setDefultFragment(new SignInFragment());
+        }
     }
 
     //phone back button fn
