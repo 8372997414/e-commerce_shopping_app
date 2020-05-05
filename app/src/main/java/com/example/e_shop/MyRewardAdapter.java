@@ -12,15 +12,22 @@ import java.util.List;
 
 public class MyRewardAdapter extends RecyclerView.Adapter<MyRewardAdapter.Viewholder> {
     private List<RewardModel> rewardModelList;
+    private Boolean useMiniLayout = false;
 
-    public MyRewardAdapter(List<RewardModel> rewardModelList) {
+    public MyRewardAdapter(List<RewardModel> rewardModelList,Boolean useMiniLayout) {
         this.rewardModelList = rewardModelList;
+        this.useMiniLayout = useMiniLayout;
     }
 
     @NonNull
     @Override
     public MyRewardAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rewareds_item_layout,viewGroup, false);
+        View view;
+        if (useMiniLayout){
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.mini_rewards_item_layout, viewGroup, false);
+        }else {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.rewareds_item_layout, viewGroup, false);
+        }
         return new Viewholder(view);
     }
 
@@ -50,10 +57,24 @@ public class MyRewardAdapter extends RecyclerView.Adapter<MyRewardAdapter.Viewho
             coupenExpiryDate = itemView.findViewById(R.id.coupen_validity);
             coupenBody = itemView.findViewById(R.id.coupen_body);
         }
-        private void setData(String title, String date, String body){
+        private void setData(final String title, final String date, final String body){
             coupenTitle.setText(title);
             coupenExpiryDate.setText(date);
             coupenBody.setText(body);
+
+            if (useMiniLayout){
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ProductDetailsActivity.coupenTitle.setText(title);
+                        ProductDetailsActivity.coupenExpiryDate.setText(date);
+                        ProductDetailsActivity.coupenBody.setText(body);
+                        ProductDetailsActivity.showDialogRecyclerView();
+
+                    }
+                });
+
+            }
 
         }
     }
