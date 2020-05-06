@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
-    android:background="@drawable/slider_bacgraund"
-    android:layout_margin="4dp"
-    android:elevation="3dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@drawable/slider_bacgraund"
+    android:elevation="3dp">
 
     <ImageView
         android:id="@+id/h_s_product_image"
@@ -16,6 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -23,16 +24,16 @@
 
     <TextView
         android:id="@+id/h_s_product_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Redmi 5A"
-        android:textSize="12sp"
         android:textAlignment="center"
         android:textColor="#000"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/h_s_product_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,16 +41,16 @@
 
     <TextView
         android:id="@+id/h_s_product_description"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="4dp"
         android:text="SD 425 Processor"
-        android:textSize="10sp"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
+        android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/h_s_product_price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +58,7 @@
 
     <TextView
         android:id="@+id/h_s_product_price"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"

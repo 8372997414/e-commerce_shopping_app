@@ -59,23 +59,6 @@ public class ViewAllActivity extends AppCompatActivity {
 
             gridView.setVisibility(View.VISIBLE);
             List<HorizontalProdutScrollModel> horizontalProdutScrollModelList = new ArrayList<>();
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-            horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw, "Redmi 5A", "SD 625 Processer", "Rs.5999/-"));
-
 
             GridProductLayoutAdapter gridProductLayoutAdapter = new GridProductLayoutAdapter(horizontalProdutScrollModelList);
             gridView.setAdapter(gridProductLayoutAdapter);
