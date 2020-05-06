@@ -47,7 +47,8 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView categoryRecyclerView;
     private CategoryAdapter categoryAdapter;
-    private RecyclerView testing;
+    private RecyclerView homePageRecyclerView;
+    private  HomePageAdapter adapter;
     private List<CategoryModel> categoryModelList;
     private FirebaseFirestore firebaseFirestore;
 
@@ -84,54 +85,62 @@ public class HomeFragment extends Fragment {
                     }
                 });
 
-        ////////////////////Banner Slider
-
-        List<SliderModel> sliderModelList = new ArrayList<SliderModel>();
-
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner2,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner3,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#faf0f0"));
-
-       ////////////////////Banner Slider
-
         //////////// Horizontal Product Layout
 
-        List<HorizontalProdutScrollModel> horizontalProdutScrollModelList =new ArrayList<>();
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+//        List<HorizontalProdutScrollModel> horizontalProdutScrollModelList =new ArrayList<>();
+//        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+//        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+//        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+//        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+//        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+//        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+//        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
+//        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
 
         //////////// Horizontal Product Layout
 
         ///////////////////////Homepage Recyclerview
-
-        testing = view.findViewById(R.id.home_page_recyclerview);
+        homePageRecyclerView = view.findViewById(R.id.home_page_recyclerview);
         LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
-        testing.setLayoutManager(testingLayoutManager);
+        homePageRecyclerView.setLayoutManager(testingLayoutManager);
+        final List<HomePageModel> homePageModelList = new ArrayList<>();
+        adapter = new HomePageAdapter(homePageModelList);
+        homePageRecyclerView.setAdapter(adapter);
 
-        List<HomePageModel> homePageModelList = new ArrayList<>();
-        homePageModelList.add(new HomePageModel(0,sliderModelList));
-        homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
-        homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
+        firebaseFirestore.collection("CATEGORIES")
+                .document("HOME")
+                .collection("TOP_DEALS").orderBy("index").get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for (QueryDocumentSnapshot documentSnapshot : task.getResult()){
 
-        HomePageAdapter adapter = new HomePageAdapter(homePageModelList);
-        testing.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+                                if ((long)documentSnapshot.get("view_type") == 0){
+                                    List<SliderModel> sliderModelList = new ArrayList<>();
+                                    long no_of_banners = (long)documentSnapshot.get("no_of_banner");
+                                    for (long x = 1;x < no_of_banners + 1;x++){
+                                        sliderModelList.add(new SliderModel(documentSnapshot.get("banner_"+x).toString()
+                                                ,documentSnapshot.get("banner_"+x+"_background").toString()));
+                                    }
+                                    homePageModelList.add(new HomePageModel(0,sliderModelList));
+                                }else if ((long)documentSnapshot.get("view_type") == 1){
+                                    homePageModelList.add(new HomePageModel(1,documentSnapshot.get("strip_ad_banner").toString()
+                                            ,documentSnapshot.get("background").toString()));
+
+                                }else if ((long)documentSnapshot.get("view_type") == 2){
+
+                                }else if ((long)documentSnapshot.get("view_type") == 3){
+
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        }else {
+                            String error = task.getException().getMessage();
+                            Toast.makeText(getContext(),error,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
         ///////////////////////Homepage Recyclerview
 

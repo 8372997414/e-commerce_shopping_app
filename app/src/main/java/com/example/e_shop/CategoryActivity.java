@@ -22,65 +22,17 @@ public class CategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_category);
         Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         String title = getIntent().getStringExtra("CategoryName");
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         categoryRecyclerView = findViewById(R.id.category_recyclerview);
-
-        ////////////////////Banner Slider
-        List<SliderModel> sliderModelList = new ArrayList<SliderModel>();
-
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#faf0f0"));
-
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner2,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner3,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner4,"#faf0f0"));
-
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner5,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner,"#faf0f0"));
-        sliderModelList.add(new SliderModel(R.drawable.sliderbanner1,"#faf0f0"));
-        ////////////////////Banner Slider
-
-        //////////// Horizontal Product Layout
-
-        List<HorizontalProdutScrollModel> horizontalProdutScrollModelList =new ArrayList<>();
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-        horizontalProdutScrollModelList.add(new HorizontalProdutScrollModel(R.drawable.forgotton_pw,"Redmi 5A","SD 625 Processer","Rs.5999/-"));
-
-        //////////// Horizontal Product Layout
-
-        ///////////////////////Homepage Recyclerview
         LinearLayoutManager testingLayoutManager = new LinearLayoutManager(this);
         categoryRecyclerView.setLayoutManager(testingLayoutManager);
-
         List<HomePageModel> homePageModelList = new ArrayList<>();
-        homePageModelList.add(new HomePageModel(0,sliderModelList));
-        homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
-        homePageModelList.add(new HomePageModel(2,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
-        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(3,"Deals of the Day!",horizontalProdutScrollModelList));
-        homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
-        homePageModelList.add(new HomePageModel(1,R.drawable.sliderbanner,"ffff00"));
-
         HomePageAdapter adapter = new HomePageAdapter(homePageModelList);
         categoryRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
-        ///////////////////////Homepage Recyclerview
-
     }
 
     @Override
