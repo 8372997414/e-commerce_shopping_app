@@ -142,6 +142,17 @@ public class HomeFragment extends Fragment {
                                             ,documentSnapshot.get("layout_background").toString(),horizontalProdutScrollModelList));
 
                                 }else if ((long)documentSnapshot.get("view_type") == 3){
+                                    List<HorizontalProdutScrollModel> GridLayoutModelList = new ArrayList<>();
+                                    long no_of_products = (long)documentSnapshot.get("no_of_products");
+                                    for (long x = 1;x < no_of_products + 1;x++){
+                                        GridLayoutModelList.add(new HorizontalProdutScrollModel(documentSnapshot.get("product_ID_"+x).toString()
+                                                ,documentSnapshot.get("product_image_"+x).toString()
+                                                ,documentSnapshot.get("product_title_"+x).toString()
+                                                ,documentSnapshot.get("product_subtitle_"+x).toString()
+                                                ,documentSnapshot.get("product_price_"+x).toString()));
+                                    }
+                                    homePageModelList.add(new HomePageModel(3,documentSnapshot.get("layout_title").toString()
+                                            ,documentSnapshot.get("layout_background").toString(),GridLayoutModelList));
 
                                 }
                             }

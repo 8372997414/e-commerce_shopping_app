@@ -4,10 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     public static Boolean showCart = false;
 
     private FrameLayout frameLayout;
+    private ImageView noInternetConnection;
     private ImageView actionBarLogo;
     private int currentFragment = -1;
     private NavigationView navigationView;
@@ -61,18 +66,28 @@ public class MainActivity extends AppCompatActivity
         navigationView.getMenu().getItem(0).setChecked(true);
 
         frameLayout =findViewById(R.id.main_framelayout);
+        noInternetConnection = findViewById(R.id.no_internet_connection);
 
-        if (showCart){
-            //drawer.setDrawerLockMode(1);
-            drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            gotoFragment("My Cart",new MyCardFragment(),-2);
-        }else{
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-            drawer.addDrawerListener(toggle);
-            toggle.syncState();
-            setFragment(new HomeFragment(),HOME_FRAGMENT);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null &&networkInfo.isConnected() == true) {
+            noInternetConnection.setVisibility(View.GONE);
+            if (showCart) {
+                //drawer.setDrawerLockMode(1);
+                drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                gotoFragment("My Cart", new MyCardFragment(), -2);
+            } else {
+                ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                        this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                drawer.addDrawerListener(toggle);
+                toggle.syncState();
+                setFragment(new HomeFragment(), HOME_FRAGMENT);
+            }
+        }else {
+            Glide.with(this).load(R.drawable.no_internet_connection).into(noInternetConnection);
+            noInternetConnection.setVisibility(View.VISIBLE);
+
         }
 
     }
