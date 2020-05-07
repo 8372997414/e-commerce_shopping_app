@@ -37,7 +37,6 @@ public class DBqueries {
                         }
                     }
                 });
-
     }
 
     public static void loadFragmentData(final HomePageAdapter adapter, final Context context) {
@@ -63,6 +62,8 @@ public class DBqueries {
                                             , documentSnapshot.get("background").toString()));
 
                                 } else if ((long) documentSnapshot.get("view_type") == 2) {
+
+                                    List<WishlistModel> viewAllProductList = new ArrayList<>();
                                     List<HorizontalProdutScrollModel> horizontalProdutScrollModelList = new ArrayList<>();
                                     long no_of_products = (long) documentSnapshot.get("no_of_products");
                                     for (long x = 1; x < no_of_products + 1; x++) {
@@ -71,9 +72,18 @@ public class DBqueries {
                                                 , documentSnapshot.get("product_title_" + x).toString()
                                                 , documentSnapshot.get("product_subtitle_" + x).toString()
                                                 , documentSnapshot.get("product_price_" + x).toString()));
+
+                                        viewAllProductList.add(new WishlistModel(documentSnapshot.get("product_image_" + x).toString()
+                                                , documentSnapshot.get("product_full_title_" + x).toString()
+                                                , (long) documentSnapshot.get("free_coupens_" + x)
+                                                , documentSnapshot.get("average_ratings_" + x).toString()
+                                                , (long) documentSnapshot.get("total_ratings_" + x)
+                                                , documentSnapshot.get("product_price_" + x).toString()
+                                                , documentSnapshot.get("cutted_price_" + x).toString()
+                                                , (boolean) documentSnapshot.get("COD_" + x)));
                                     }
                                     homePageModelList.add(new HomePageModel(2, documentSnapshot.get("layout_title").toString()
-                                            , documentSnapshot.get("layout_background").toString(), horizontalProdutScrollModelList));
+                                            ,documentSnapshot.get("layout_background").toString(), horizontalProdutScrollModelList, viewAllProductList));
 
                                 } else if ((long) documentSnapshot.get("view_type") == 3) {
                                     List<HorizontalProdutScrollModel> GridLayoutModelList = new ArrayList<>();

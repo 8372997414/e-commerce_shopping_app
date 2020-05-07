@@ -56,17 +56,43 @@ public class HomePageModel {
     }
     ////////////Strip Ad
 
-    //////////// Horizontal Product Layout && // Grid Product Layout
+
 
     private String title;
     private List<HorizontalProdutScrollModel> horizontalProdutScrollModelList;
 
-    public HomePageModel(int type, String title,String backgroundColor, List<HorizontalProdutScrollModel> horizontalProdutScrollModelList) {
+    //////////// Horizontal Product Layout
+    private List<WishlistModel> viewAllProductList;
+
+
+    public HomePageModel(int type, String title,String backgroundColor, List<HorizontalProdutScrollModel> horizontalProdutScrollModelList,List<WishlistModel> viewAllProductList) {
+        this.type = type;
+        this.title = title;
+        this.backgroundColor = backgroundColor;
+        this.horizontalProdutScrollModelList = horizontalProdutScrollModelList;
+        this.viewAllProductList = viewAllProductList;
+    }
+
+    public List<WishlistModel> getViewAllProductList() {
+        return viewAllProductList;
+    }
+
+    public void setViewAllProductList(List<WishlistModel> viewAllProductList) {
+        this.viewAllProductList = viewAllProductList;
+    }
+    //////////// Horizontal Product Layout
+
+
+    //////////// Grid Product Layout
+
+    public HomePageModel(int type, String title, String backgroundColor, List<HorizontalProdutScrollModel> horizontalProdutScrollModelList) {
         this.type = type;
         this.title = title;
         this.backgroundColor = backgroundColor;
         this.horizontalProdutScrollModelList = horizontalProdutScrollModelList;
     }
+    //////////// Grid Product Layout
+
     public String getTitle() {
         return title;
     }
@@ -79,8 +105,6 @@ public class HomePageModel {
     public void setHorizontalProdutScrollModelList(List<HorizontalProdutScrollModel> horizontalProdutScrollModelList) {
         this.horizontalProdutScrollModelList = horizontalProdutScrollModelList;
     }
-
-    //////////// Horizontal Product Layout && // Grid Product Layout
 
 
 }

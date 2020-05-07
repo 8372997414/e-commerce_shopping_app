@@ -18,6 +18,7 @@ public class ViewAllActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private GridView gridView;
+    public static List<WishlistModel> wishlistModelList;
     public static List<HorizontalProdutScrollModel> horizontalProdutScrollModelList;
 
     @Override
@@ -40,19 +41,6 @@ public class ViewAllActivity extends AppCompatActivity {
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
-
-            List<WishlistModel> wishlistModelList = new ArrayList<>();
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 1, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 0, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 2, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 4, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 1, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 1, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 0, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 2, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 4, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-            wishlistModelList.add(new WishlistModel(R.drawable.forgotton_pw, "Pixel 2", 1, "3", 145, "Rs.49999/-", "Rs.59999/-", "Cash on delivery"));
-
 
             WishlistAdaptor adaptor = new WishlistAdaptor(wishlistModelList, false);
             recyclerView.setAdapter(adaptor);
