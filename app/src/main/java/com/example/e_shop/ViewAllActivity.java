@@ -18,6 +18,8 @@ public class ViewAllActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private GridView gridView;
+    public static List<HorizontalProdutScrollModel> horizontalProdutScrollModelList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +27,7 @@ public class ViewAllActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Deals of the Day");
+        getSupportActionBar().setTitle(getIntent().getStringExtra("title"));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recyclerView = findViewById(R.id.recycler_view);
@@ -58,7 +60,6 @@ public class ViewAllActivity extends AppCompatActivity {
         }else if (layout_code == 1) {
 
             gridView.setVisibility(View.VISIBLE);
-            List<HorizontalProdutScrollModel> horizontalProdutScrollModelList = new ArrayList<>();
 
             GridProductLayoutAdapter gridProductLayoutAdapter = new GridProductLayoutAdapter(horizontalProdutScrollModelList);
             gridView.setAdapter(gridProductLayoutAdapter);

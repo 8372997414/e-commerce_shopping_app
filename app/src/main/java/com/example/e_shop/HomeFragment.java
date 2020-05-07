@@ -3,6 +3,8 @@ package com.example.e_shop;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -55,36 +58,47 @@ public class HomeFragment extends Fragment {
     private CategoryAdapter categoryAdapter;
     private RecyclerView homePageRecyclerView;
     private HomePageAdapter adapter;
+    private ImageView noInternetConnection;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        noInternetConnection = view.findViewById(R.id.no_internet_connection);
 
-        categoryRecyclerView = view.findViewById(R.id.category_recyclerview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        categoryRecyclerView.setLayoutManager(layoutManager);
+        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo != null &&networkInfo.isConnected() == true) {
+            noInternetConnection.setVisibility(View.GONE);
+            categoryRecyclerView = view.findViewById(R.id.category_recyclerview);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            categoryRecyclerView.setLayoutManager(layoutManager);
 
-        categoryAdapter = new CategoryAdapter(categoryModelList);
-        categoryRecyclerView.setAdapter(categoryAdapter);
+            categoryAdapter = new CategoryAdapter(categoryModelList);
+            categoryRecyclerView.setAdapter(categoryAdapter);
 
-        if (categoryModelList.size() == 0) {
-            loadCategories(categoryAdapter, getContext());
-        } else {
-            categoryAdapter.notifyDataSetChanged();
-        }
-        homePageRecyclerView = view.findViewById(R.id.home_page_recyclerview);
-        LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
-        homePageRecyclerView.setLayoutManager(testingLayoutManager);
-        adapter = new HomePageAdapter(homePageModelList);
-        homePageRecyclerView.setAdapter(adapter);
+            if (categoryModelList.size() == 0) {
+                loadCategories(categoryAdapter, getContext());
+            } else {
+                categoryAdapter.notifyDataSetChanged();
+            }
+            homePageRecyclerView = view.findViewById(R.id.home_page_recyclerview);
+            LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
+            homePageRecyclerView.setLayoutManager(testingLayoutManager);
+            adapter = new HomePageAdapter(homePageModelList);
+            homePageRecyclerView.setAdapter(adapter);
 
-        if (homePageModelList.size() == 0) {
-            loadFragmentData(adapter, getContext());
-        } else {
-            categoryAdapter.notifyDataSetChanged();
+            if (homePageModelList.size() == 0) {
+                loadFragmentData(adapter, getContext());
+            } else {
+                categoryAdapter.notifyDataSetChanged();
+            }
+
+        }else {
+            Glide.with(this).load(R.drawable.no_internet_connection).into(noInternetConnection);
+            noInternetConnection.setVisibility(View.VISIBLE);
         }
         return view;
     }
