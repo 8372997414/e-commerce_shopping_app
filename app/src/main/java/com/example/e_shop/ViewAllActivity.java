@@ -42,6 +42,8 @@ public class ViewAllActivity extends AppCompatActivity {
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             recyclerView.setLayoutManager(layoutManager);
 
+            List<WishlistModel> wishlistModelList =new ArrayList<>();
+
             WishlistAdaptor adaptor = new WishlistAdaptor(wishlistModelList, false);
             recyclerView.setAdapter(adaptor);
             adaptor.notifyDataSetChanged();

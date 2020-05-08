@@ -7,7 +7,7 @@
     android:elevation="3dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/linearLayout4">
+    android:id="@+id/product_details_tab_container">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/product_detials_tablayout"

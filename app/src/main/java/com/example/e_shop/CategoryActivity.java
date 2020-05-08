@@ -12,9 +12,14 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.e_shop.DBqueries.lists;
+import static com.example.e_shop.DBqueries.loadFragmentData;
+import static com.example.e_shop.DBqueries.loadedCategoriesNames;
+
 public class CategoryActivity extends AppCompatActivity {
 
     private RecyclerView categoryRecyclerView;
+    private HomePageAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +34,22 @@ public class CategoryActivity extends AppCompatActivity {
         categoryRecyclerView = findViewById(R.id.category_recyclerview);
         LinearLayoutManager testingLayoutManager = new LinearLayoutManager(this);
         categoryRecyclerView.setLayoutManager(testingLayoutManager);
-        List<HomePageModel> homePageModelList = new ArrayList<>();
-        HomePageAdapter adapter = new HomePageAdapter(homePageModelList);
+
+        int listPosition = 0;
+        for (int x =0; x < loadedCategoriesNames.size();x++){
+            if (loadedCategoriesNames.get(x).equals(title.toUpperCase())){
+                listPosition = x;
+            }
+        }
+        if (listPosition == 0){
+            loadedCategoriesNames.add(title.toUpperCase());
+            lists.add(new ArrayList<HomePageModel>());
+            adapter = new HomePageAdapter(lists.get(loadedCategoriesNames.size()-1));
+            loadFragmentData(adapter, this,loadedCategoriesNames.size()-1,title.toUpperCase());
+        }else {
+            adapter = new HomePageAdapter(lists.get(listPosition));
+        }
+
         categoryRecyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

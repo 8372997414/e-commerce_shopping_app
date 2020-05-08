@@ -39,9 +39,10 @@ import java.util.TimerTask;
 
 import static com.example.e_shop.DBqueries.categoryModelList;
 import static com.example.e_shop.DBqueries.firebaseFirestore;
-import static com.example.e_shop.DBqueries.homePageModelList;
+import static com.example.e_shop.DBqueries.lists;
 import static com.example.e_shop.DBqueries.loadCategories;
 import static com.example.e_shop.DBqueries.loadFragmentData;
+import static com.example.e_shop.DBqueries.loadedCategoriesNames;
 
 
 /**
@@ -87,14 +88,18 @@ public class HomeFragment extends Fragment {
             homePageRecyclerView = view.findViewById(R.id.home_page_recyclerview);
             LinearLayoutManager testingLayoutManager = new LinearLayoutManager(getContext());
             homePageRecyclerView.setLayoutManager(testingLayoutManager);
-            adapter = new HomePageAdapter(homePageModelList);
-            homePageRecyclerView.setAdapter(adapter);
 
-            if (homePageModelList.size() == 0) {
-                loadFragmentData(adapter, getContext());
+
+            if (lists.size() == 0) {
+                loadedCategoriesNames.add("HOME");
+                lists.add(new ArrayList<HomePageModel>());
+                adapter = new HomePageAdapter(lists.get(0));
+                loadFragmentData(adapter, getContext(),0,"Home");
             } else {
-                categoryAdapter.notifyDataSetChanged();
+                adapter = new HomePageAdapter(lists.get(0));
+                adapter.notifyDataSetChanged();
             }
+            homePageRecyclerView.setAdapter(adapter);
 
         }else {
             Glide.with(this).load(R.drawable.no_internet_connection).into(noInternetConnection);
