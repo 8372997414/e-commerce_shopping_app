@@ -3,6 +3,7 @@ package com.example.e_shop;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,21 +53,24 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private TextView rewardTitle;
     private TextView rewardBody;
 
-    ////Coupendialog
-
-    public static TextView coupenTitle;
-    public static TextView coupenExpiryDate;
-    public static TextView coupenBody;
-    private static RecyclerView coupensRecyclerView;
-    private static LinearLayout selectedCoupen;
-
-    ////Coupendialog
-
+    /////Product description
+    private ConstraintLayout productDetailsOnlyContainer;
+    private ConstraintLayout productDetailsTabsContainer;
     private ViewPager productDetailsViewpager;
     private TabLayout productDetailsTablayout;
+    private TextView productOnlyDescriptionBody;
+
+    public static String productDescription;
+    public static String productOtherDetails;
+    public static int tabPosition = -1;
+    /////Product description
 
     ///////Rating Layout
     private LinearLayout rateNowContainer;
+    private TextView totalRatings;
+    private LinearLayout ratingsNoContainer;
+    private TextView totalRatingFigure;
+    private LinearLayout ratingsProgressBarContainer;
     ///////Rating Layout
     private Button buyNowBtn;
 
@@ -73,6 +78,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private FloatingActionButton addToWishlistBtn;
 
     private FirebaseFirestore firebaseFirestore;
+    ////Coupendialog
+    public static TextView coupenTitle;
+    public static TextView coupenExpiryDate;
+    public static TextView coupenBody;
+    private static RecyclerView coupensRecyclerView;
+    private static LinearLayout selectedCoupen;
+    ////Coupendialog
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +112,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         codIndicator = findViewById(R.id.cod_indicator_imageview);
         rewardTitle = findViewById(R.id.reward_title);
         rewardBody = findViewById(R.id.reward_body);
+        productDetailsTabsContainer = findViewById(R.id.product_details_tab_container);
+        productDetailsOnlyContainer = findViewById(R.id.product_details_contener);
+        productOnlyDescriptionBody = findViewById(R.id.product_details_boby);
+        totalRatings = findViewById(R.id.total_ratings);
+        ratingsNoContainer = findViewById(R.id.rating_numbers_container);
+        totalRatingFigure = findViewById(R.id.total_rating_figure);
+        ratingsProgressBarContainer = findViewById(R.id.rating_progressbar_contener);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -132,6 +151,39 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     rewardTitle.setText((long)documentSnapshot.get("free_coupens") + documentSnapshot.get("free_coupen_title").toString());
                     rewardBody.setText(documentSnapshot.get("free_coupen_body").toString());
 
+                    if ((boolean)documentSnapshot.get("use_tab_layout")){
+                        productDetailsTabsContainer.setVisibility(View.VISIBLE);
+                        productDetailsOnlyContainer.setVisibility(View.GONE);
+                        productDescription = documentSnapshot.get("product_description").toString();
+                        ProductDesciptionFragment.productDescription = documentSnapshot.get("product_description").toString();
+                        ProductSpecificationFragment.productSpecificationModelList = new ArrayList<>();
+                        productOtherDetails = documentSnapshot.get("product_other_details").toString();
+
+                        for (long x = 1; x< (long) documentSnapshot.get("total_spec_titles")+1;x++){
+                            ProductSpecificationFragment.productSpecificationModelList.add(new ProductSpecificationModel(0,documentSnapshot.get("spec_title_"+x).toString()));
+                            for (long y = 1; y < (long)documentSnapshot.get("spec_title_"+x+"_total_fields")+1;y++){
+                                ProductSpecificationFragment.productSpecificationModelList.add(new ProductSpecificationModel(1,documentSnapshot.get("spec_title_"+x+"_field_"+y+"_name").toString(),documentSnapshot.get("spec_title_"+x+"_field_"+y+"_value").toString()));
+                            }
+                        }
+
+                    }else {
+                        productDetailsTabsContainer.setVisibility(View.GONE);
+                        productDetailsOnlyContainer.setVisibility(View.VISIBLE);
+                        productOnlyDescriptionBody.setText(documentSnapshot.get("product_description").toString());
+                    }
+
+                    totalRatings.setText((long)documentSnapshot.get("total_ratings")+"ratings");
+
+                    for (int x = 1; x<6; x++){
+                        TextView rating = (TextView) ratingsNoContainer.getChildAt(x);
+                        rating.setText(String.valueOf((long)documentSnapshot.get((6-x)+"_star")));
+
+                        ProgressBar progressBar = (ProgressBar) ratingsProgressBarContainer.getChildAt(x);
+                        int maxProgres =Integer.parseInt(String.valueOf((long)documentSnapshot.get("total_ratings")));
+                        progressBar.setMax(maxProgres);
+                        progressBar.setProgress(Integer.parseInt(String.valueOf((long)documentSnapshot.get((6-x)+"_star"))));
+                    }
+                    totalRatingFigure.setText(String.valueOf((long)documentSnapshot.get("total_ratings")));
                 }else {
                     String error = task.getException().getMessage();
                     Toast.makeText(ProductDetailsActivity.this, error,Toast.LENGTH_SHORT).show();
@@ -159,6 +211,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDetailsTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                tabPosition = tab.getPosition();
                 productDetailsViewpager.setCurrentItem(tab.getPosition());
             }
 
