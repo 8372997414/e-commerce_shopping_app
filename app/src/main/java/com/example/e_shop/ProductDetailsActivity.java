@@ -60,9 +60,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private TabLayout productDetailsTablayout;
     private TextView productOnlyDescriptionBody;
 
-    public static String productDescription;
-    public static String productOtherDetails;
-    public static int tabPosition = -1;
+    private List<ProductSpecificationModel> productSpecificationModelList = new ArrayList<>();
+    private String productDescription;
+    private String productOtherDetails;
     /////Product description
 
     ///////Rating Layout
@@ -155,8 +155,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                         productDetailsTabsContainer.setVisibility(View.VISIBLE);
                         productDetailsOnlyContainer.setVisibility(View.GONE);
                         productDescription = documentSnapshot.get("product_description").toString();
-                        ProductDesciptionFragment.productDescription = documentSnapshot.get("product_description").toString();
-                        ProductSpecificationFragment.productSpecificationModelList = new ArrayList<>();
+
                         productOtherDetails = documentSnapshot.get("product_other_details").toString();
 
                         for (long x = 1; x< (long) documentSnapshot.get("total_spec_titles")+1;x++){
@@ -174,16 +173,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
                     totalRatings.setText((long)documentSnapshot.get("total_ratings")+"ratings");
 
-                    for (int x = 1; x<6; x++){
+                    for (int x = 0; x<5; x++){
                         TextView rating = (TextView) ratingsNoContainer.getChildAt(x);
-                        rating.setText(String.valueOf((long)documentSnapshot.get((6-x)+"_star")));
+                        rating.setText(String.valueOf((long)documentSnapshot.get((5-x)+"_star")));
 
                         ProgressBar progressBar = (ProgressBar) ratingsProgressBarContainer.getChildAt(x);
                         int maxProgres =Integer.parseInt(String.valueOf((long)documentSnapshot.get("total_ratings")));
                         progressBar.setMax(maxProgres);
-                        progressBar.setProgress(Integer.parseInt(String.valueOf((long)documentSnapshot.get((6-x)+"_star"))));
+                        progressBar.setProgress(Integer.parseInt(String.valueOf((long)documentSnapshot.get((5-x)+"_star"))));
                     }
                     totalRatingFigure.setText(String.valueOf((long)documentSnapshot.get("total_ratings")));
+                    productDetailsViewpager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(),productDetailsTablayout.getTabCount(),productDescription,productOtherDetails,productSpecificationModelList));
                 }else {
                     String error = task.getException().getMessage();
                     Toast.makeText(ProductDetailsActivity.this, error,Toast.LENGTH_SHORT).show();
@@ -206,12 +206,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
 
-        productDetailsViewpager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(),productDetailsTablayout.getTabCount()));
         productDetailsViewpager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(productDetailsTablayout));
         productDetailsTablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                tabPosition = tab.getPosition();
                 productDetailsViewpager.setCurrentItem(tab.getPosition());
             }
 
