@@ -39,6 +39,7 @@ import static com.example.e_shop.MainActivity.showCart;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
+    public static List<ProductSpecificationModel> productSpecificationModelList = new ArrayList<>();
     private ViewPager productImagesViewPager;
     private TextView productTitle;
     private TextView averageRatingMiniView;
@@ -60,7 +61,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private TabLayout productDetailsTablayout;
     private TextView productOnlyDescriptionBody;
 
-    private List<ProductSpecificationModel> productSpecificationModelList = new ArrayList<>();
     private String productDescription;
     private String productOtherDetails;
     /////Product description
@@ -71,6 +71,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private LinearLayout ratingsNoContainer;
     private TextView totalRatingFigure;
     private LinearLayout ratingsProgressBarContainer;
+    private TextView averageRating;
     ///////Rating Layout
     private Button buyNowBtn;
 
@@ -91,7 +92,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
-        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -119,6 +120,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ratingsNoContainer = findViewById(R.id.rating_numbers_container);
         totalRatingFigure = findViewById(R.id.total_rating_figure);
         ratingsProgressBarContainer = findViewById(R.id.rating_progressbar_contener);
+        averageRating = findViewById(R.id.average_rating);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -128,75 +130,76 @@ public class ProductDetailsActivity extends AppCompatActivity {
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()){
+                if (task.isSuccessful()) {
                     DocumentSnapshot documentSnapshot = task.getResult();
-                    for (long x =1; x<(long)documentSnapshot.get("no_of_product_images") +1; x++){
-                        productImages.add(documentSnapshot.get("product_image_"+x).toString());
+                    for (long x = 1; x < (long) documentSnapshot.get("no_of_product_images") + 1; x++) {
+                        productImages.add(documentSnapshot.get("product_image_" + x).toString());
                     }
                     ProductImagesAdapter productImagesAdapter = new ProductImagesAdapter(productImages);
                     productImagesViewPager.setAdapter(productImagesAdapter);
 
                     productTitle.setText(documentSnapshot.get("product_title").toString());
                     averageRatingMiniView.setText(documentSnapshot.get("average_rating").toString());
-                    totalRatingMiniView.setText("("+(long)documentSnapshot.get("total_ratings")+")ratings");
-                    productPrice.setText("Rs."+documentSnapshot.get("product_price").toString()+"/-");
-                    cuttedPrice.setText("Rs."+documentSnapshot.get("cutted_price").toString()+"/-");
-                    if ((boolean)documentSnapshot.get("COD")){
+                    totalRatingMiniView.setText("(" + (long) documentSnapshot.get("total_ratings") + ")ratings");
+                    productPrice.setText("Rs." + documentSnapshot.get("product_price").toString() + "/-");
+                    cuttedPrice.setText("Rs." + documentSnapshot.get("cutted_price").toString() + "/-");
+                    if ((boolean) documentSnapshot.get("COD")) {
                         codIndicator.setVisibility(View.VISIBLE);
                         tvCodIndicator.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         codIndicator.setVisibility(View.INVISIBLE);
                         tvCodIndicator.setVisibility(View.INVISIBLE);
                     }
-                    rewardTitle.setText((long)documentSnapshot.get("free_coupens") + documentSnapshot.get("free_coupen_title").toString());
+//                    rewardTitle.setText((long)documentSnapshot.get("free_coupens") + documentSnapshot.get("free_coupen_title").toString());
                     rewardBody.setText(documentSnapshot.get("free_coupen_body").toString());
 
-                    if ((boolean)documentSnapshot.get("use_tab_layout")){
+                    if ((boolean) documentSnapshot.get("use_tab_layout")) {
                         productDetailsTabsContainer.setVisibility(View.VISIBLE);
                         productDetailsOnlyContainer.setVisibility(View.GONE);
                         productDescription = documentSnapshot.get("product_description").toString();
 
                         productOtherDetails = documentSnapshot.get("product_other_details").toString();
 
-                        for (long x = 1; x< (long) documentSnapshot.get("total_spec_titles")+1;x++){
-                            ProductSpecificationFragment.productSpecificationModelList.add(new ProductSpecificationModel(0,documentSnapshot.get("spec_title_"+x).toString()));
-                            for (long y = 1; y < (long)documentSnapshot.get("spec_title_"+x+"_total_fields")+1;y++){
-                                ProductSpecificationFragment.productSpecificationModelList.add(new ProductSpecificationModel(1,documentSnapshot.get("spec_title_"+x+"_field_"+y+"_name").toString(),documentSnapshot.get("spec_title_"+x+"_field_"+y+"_value").toString()));
+                        for (long x = 1; x < (long) documentSnapshot.get("total_spec_title") + 1; x++) {
+                            productSpecificationModelList.add(new ProductSpecificationModel(0, documentSnapshot.get("spec_title_" + x).toString()));
+                            for (long y = 1; y < (long) documentSnapshot.get("spec_title_" + x + "_total_fields") + 1; y++) {
+                                productSpecificationModelList.add(new ProductSpecificationModel(1, documentSnapshot.get("spec_title_" + x + "_field_" + y + "_name").toString(), documentSnapshot.get("spec_title_" + x + "_field_" + y + "_value").toString()));
                             }
                         }
 
-                    }else {
+                    } else {
                         productDetailsTabsContainer.setVisibility(View.GONE);
                         productDetailsOnlyContainer.setVisibility(View.VISIBLE);
                         productOnlyDescriptionBody.setText(documentSnapshot.get("product_description").toString());
                     }
 
-                    totalRatings.setText((long)documentSnapshot.get("total_ratings")+"ratings");
+                    totalRatings.setText((long) documentSnapshot.get("total_ratings") + "ratings");
 
-                    for (int x = 0; x<5; x++){
+                    for (int x = 0; x < 5; x++) {
                         TextView rating = (TextView) ratingsNoContainer.getChildAt(x);
-                        rating.setText(String.valueOf((long)documentSnapshot.get((5-x)+"_star")));
+                        rating.setText(String.valueOf((long) documentSnapshot.get((5 - x) + "_star")));
 
                         ProgressBar progressBar = (ProgressBar) ratingsProgressBarContainer.getChildAt(x);
-                        int maxProgres =Integer.parseInt(String.valueOf((long)documentSnapshot.get("total_ratings")));
+                        int maxProgres = Integer.parseInt(String.valueOf((long) documentSnapshot.get("total_ratings")));
                         progressBar.setMax(maxProgres);
-                        progressBar.setProgress(Integer.parseInt(String.valueOf((long)documentSnapshot.get((5-x)+"_star"))));
+                        progressBar.setProgress(Integer.parseInt(String.valueOf((long) documentSnapshot.get((5 - x) + "_star"))));
                     }
-                    totalRatingFigure.setText(String.valueOf((long)documentSnapshot.get("total_ratings")));
-                    productDetailsViewpager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(),productDetailsTablayout.getTabCount(),productDescription,productOtherDetails,productSpecificationModelList));
-                }else {
+                    totalRatingFigure.setText(String.valueOf((long) documentSnapshot.get("total_ratings")));
+                    averageRating.setText(documentSnapshot.get("average_rating").toString());
+                    productDetailsViewpager.setAdapter(new ProductDetailsAdapter(getSupportFragmentManager(), productDetailsTablayout.getTabCount(), productDescription, productOtherDetails, productSpecificationModelList));
+                } else {
                     String error = task.getException().getMessage();
-                    Toast.makeText(ProductDetailsActivity.this, error,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProductDetailsActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        viewpagerIndicator.setupWithViewPager(productImagesViewPager,true);
+        viewpagerIndicator.setupWithViewPager(productImagesViewPager, true);
 
         addToWishlistBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ALLREDY_ADDED_TO_WISHLIST){
+                if (ALLREDY_ADDED_TO_WISHLIST) {
                     ALLREDY_ADDED_TO_WISHLIST = false;
                     addToWishlistBtn.setSupportBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#9e9e9e")));
                 } else {
@@ -228,7 +231,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         ///////Rating Layout
 
         rateNowContainer = findViewById(R.id.rate_now_container);
-        for (int x = 0; x < rateNowContainer.getChildCount();x++){
+        for (int x = 0; x < rateNowContainer.getChildCount(); x++) {
             final int starPosition = x;
             rateNowContainer.getChildAt(x).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -243,7 +246,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         buyNowBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent deliveryIntent = new Intent(ProductDetailsActivity.this,DeliveryActivity.class);
+                Intent deliveryIntent = new Intent(ProductDetailsActivity.this, DeliveryActivity.class);
                 startActivity(deliveryIntent);
             }
         });
@@ -253,7 +256,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         final Dialog checkCoupenPriceDialog = new Dialog(ProductDetailsActivity.this);
         checkCoupenPriceDialog.setContentView(R.layout.coupen_redeem_dialog);
         checkCoupenPriceDialog.setCancelable(true);
-        checkCoupenPriceDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        checkCoupenPriceDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
         final ImageView toggleRecyclerView = checkCoupenPriceDialog.findViewById(R.id.toggle_recyclerview);
         coupensRecyclerView = checkCoupenPriceDialog.findViewById(R.id.coupens_recyclerview);
@@ -261,7 +264,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         coupenTitle = checkCoupenPriceDialog.findViewById(R.id.coupen_title);
         coupenExpiryDate = checkCoupenPriceDialog.findViewById(R.id.coupen_validity);
         coupenBody = checkCoupenPriceDialog.findViewById(R.id.coupen_body);
-
 
 
         TextView originalPrice = checkCoupenPriceDialog.findViewById(R.id.original_price);
@@ -272,17 +274,17 @@ public class ProductDetailsActivity extends AppCompatActivity {
         coupensRecyclerView.setLayoutManager(layoutManager);
 
         List<RewardModel> rewardModelList = new ArrayList<>();
-        rewardModelList.add(new RewardModel("Cashback","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
-        rewardModelList.add(new RewardModel("Discount","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
-        rewardModelList.add(new RewardModel("Buy 1 get 1 free","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
-        rewardModelList.add(new RewardModel("Cashback","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
-        rewardModelList.add(new RewardModel("Discount","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
-        rewardModelList.add(new RewardModel("Buy 1 get 1 free","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
-        rewardModelList.add(new RewardModel("Cashback","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
-        rewardModelList.add(new RewardModel("Discount","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
-        rewardModelList.add(new RewardModel("Buy 1 get 1 free","till 2nd,June 2016","GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Cashback", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Discount", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Buy 1 get 1 free", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Cashback", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Discount", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Buy 1 get 1 free", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Cashback", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Discount", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
+        rewardModelList.add(new RewardModel("Buy 1 get 1 free", "till 2nd,June 2016", "GET 20% CASHBACK on any product above Rs.200/- and below Rs.3000/-."));
 
-        MyRewardAdapter myRewardAdapter = new MyRewardAdapter(rewardModelList,true);
+        MyRewardAdapter myRewardAdapter = new MyRewardAdapter(rewardModelList, true);
         coupensRecyclerView.setAdapter(myRewardAdapter);
         myRewardAdapter.notifyDataSetChanged();
 
@@ -303,11 +305,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
         });
     }
 
-    public static void showDialogRecyclerView(){
-        if (coupensRecyclerView.getVisibility() == View.GONE){
+    public static void showDialogRecyclerView() {
+        if (coupensRecyclerView.getVisibility() == View.GONE) {
             coupensRecyclerView.setVisibility(View.VISIBLE);
             selectedCoupen.setVisibility(View.GONE);
-        }else {
+        } else {
             coupensRecyclerView.setVisibility(View.GONE);
             selectedCoupen.setVisibility(View.VISIBLE);
         }
@@ -315,10 +317,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
     }
 
     private void setRating(int starPosition) {
-        for (int x = 0; x < rateNowContainer.getChildCount();x++){
+        for (int x = 0; x < rateNowContainer.getChildCount(); x++) {
             ImageView starBtn = (ImageView) rateNowContainer.getChildAt(x);
             starBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#bebebe")));
-            if (x <= starPosition){
+            if (x <= starPosition) {
                 starBtn.setImageTintList(ColorStateList.valueOf(Color.parseColor("#ffbb00")));
             }
         }
@@ -346,7 +348,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
             //todo: search
             return true;
         } else if (id == R.id.main_cart_icon) {
-            Intent cartIntent = new Intent(ProductDetailsActivity.this,MainActivity.class);
+            Intent cartIntent = new Intent(ProductDetailsActivity.this, MainActivity.class);
             showCart = true;
             startActivity(cartIntent);
             return true;

@@ -27,7 +27,7 @@ public class ProductSpecificationFragment extends Fragment {
     }
 
     private RecyclerView productSpecificationRecyclerView;
-    public static List<ProductSpecificationModel> productSpecificationModelList;
+    public List<ProductSpecificationModel> productSpecificationModelList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,31 +43,32 @@ public class ProductSpecificationFragment extends Fragment {
 
         productSpecificationRecyclerView.setLayoutManager(linearLayoutManager);
 
-//        productSpecificationModelList.add(new ProductSpecificationModel(0,"General"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(0,"Display"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(0,"General"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(0,"Display"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-//        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
-        ProductSpecificationAdapter productSpecificationAdapter = new ProductSpecificationAdapter(productSpecificationModelList);
+        productSpecificationModelList.add(new ProductSpecificationModel(0,"General"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(0,"Display"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(0,"General"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(0,"Display"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+        productSpecificationModelList.add(new ProductSpecificationModel(1,"Ram","4GB"));
+
+        ProductSpecificationAdapter productSpecificationAdapter = new ProductSpecificationAdapter(ProductDetailsActivity.productSpecificationModelList);
         productSpecificationAdapter.notifyDataSetChanged();
         return view;
     }
