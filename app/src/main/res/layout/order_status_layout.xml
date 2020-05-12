@@ -32,7 +32,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:elevation="3dp"
-        android:src="@drawable/forgotton_pw"
+        android:src="@drawable/mobile"
         app:civ_border_color="@color/colorAccent"
         app:civ_border_width="5dp"
         app:layout_constraintEnd_toEndOf="parent"

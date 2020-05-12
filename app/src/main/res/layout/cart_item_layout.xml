@@ -17,7 +17,7 @@
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/forgotton_pw" />
+        app:srcCompat="@drawable/mobile" />
 
     <TextView
         android:id="@+id/product_title"

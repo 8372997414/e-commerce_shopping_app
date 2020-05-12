@@ -147,5 +147,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:srcCompat="@drawable/profile_img" />
+        app:srcCompat="@drawable/happy_shopping_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

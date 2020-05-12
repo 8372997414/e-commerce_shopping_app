@@ -18,7 +18,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/forgotton_pw" />
+        app:srcCompat="@drawable/mobile" />
 
     <TextView
         android:id="@+id/product_title"
