@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -116,6 +117,7 @@ public class HomeFragment extends Fragment {
         connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null &&networkInfo.isConnected() == true) {
+            MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             noInternetConnection.setVisibility(View.GONE);
             retryBtn.setVisibility(View.GONE);
             categoryRecyclerView.setVisibility(View.VISIBLE);
@@ -138,6 +140,7 @@ public class HomeFragment extends Fragment {
             }
             homePageRecyclerView.setAdapter(adapter);
         }else {
+            MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             categoryRecyclerView.setVisibility(View.GONE);
             homePageRecyclerView.setVisibility(View.GONE);
             Glide.with(this).load(R.drawable.no_internet_connection).into(noInternetConnection);
@@ -170,6 +173,7 @@ public class HomeFragment extends Fragment {
         lists.clear();
         loadedCategoriesNames.clear();
         if (networkInfo != null &&networkInfo.isConnected() == true) {
+            MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
             noInternetConnection.setVisibility(View.GONE);
             retryBtn.setVisibility(View.GONE);
             categoryRecyclerView.setVisibility(View.VISIBLE);
@@ -185,6 +189,7 @@ public class HomeFragment extends Fragment {
             lists.add(new ArrayList<HomePageModel>());
             loadFragmentData(homePageRecyclerView, getContext(),0,"Home");
         }else {
+            MainActivity.drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
             Toast.makeText(getContext(),"No internet Connection!",Toast.LENGTH_SHORT).show();
             categoryRecyclerView.setVisibility(View.GONE);
             homePageRecyclerView.setVisibility(View.GONE);

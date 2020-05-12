@@ -29,13 +29,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.e_shop.DBqueries.currentUser;
 import static com.example.e_shop.MainActivity.showCart;
 import static com.example.e_shop.RegisterActivity.setSignUpFragment;
 
@@ -94,6 +95,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     ////Coupen dialog
 
     private Dialog signInDialog;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +138,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
 
         final List<String> productImages = new ArrayList<>();
 
-        firebaseFirestore.collection("PRODUCTS").document("VYNgMKIVlUOMy339jkfy")
+        firebaseFirestore.collection("PRODUCTS").document(getIntent().getStringExtra("PRODUCT_ID"))
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -370,10 +372,20 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         });
         ///// SignIn Dialog
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null){
             coupenRedemptionLayout.setVisibility(View.GONE);
+        }else {
+            coupenRedemptionLayout.setVisibility(View.VISIBLE);
+
         }
     }
+
     public static void showDialogRecyclerView() {
         if (coupensRecyclerView.getVisibility() == View.GONE) {
             coupensRecyclerView.setVisibility(View.VISIBLE);
@@ -384,7 +396,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
         }
 
     }
-
     private void setRating(int starPosition) {
         for (int x = 0; x < rateNowContainer.getChildCount(); x++) {
             ImageView starBtn = (ImageView) rateNowContainer.getChildAt(x);
@@ -394,15 +405,12 @@ public class ProductDetailsActivity extends AppCompatActivity {
             }
         }
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.search_and_card_icon, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
