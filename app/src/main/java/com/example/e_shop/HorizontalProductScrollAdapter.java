@@ -37,12 +37,8 @@ public class HorizontalProductScrollAdapter extends RecyclerView.Adapter<Horizon
         String description = horizontalProdutScrollModelList.get(position).getProductDescription();
         String price = horizontalProdutScrollModelList.get(position).getProductPrice();
 
-        viewHolder.setProductImage(resource);
-        viewHolder.setProductTitle(title);
-        viewHolder.setProductDescription(description);
-        viewHolder.setProductPrice(price);
+        viewHolder.setData(title,resource,description,price);
     }
-
     @Override
     public int getItemCount() {
         if (horizontalProdutScrollModelList.size()>8){
@@ -65,27 +61,23 @@ public class HorizontalProductScrollAdapter extends RecyclerView.Adapter<Horizon
             productTitle = itemView.findViewById(R.id.h_s_product_title);
             productDescription = itemView.findViewById(R.id.h_s_product_description);
             productPrice = itemView.findViewById(R.id.h_s_product_price);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent productDetailsIntent = new Intent(itemView.getContext(),ProductDetailsActivity.class);
-                    itemView.getContext().startActivity(productDetailsIntent);
-                }
-            });
         }
 
-        private void setProductImage(String resource){
-            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.home)).into(productImage);
-        }
-        private void setProductTitle(String title){
+        private void setData(String resource,String title,String description,String price){
+            Glide.with(itemView.getContext()).load(resource).apply(new RequestOptions().placeholder(R.drawable.placeholder_icon_1)).into(productImage);
             productTitle.setText(title);
-        }
-        private void setProductDescription(String description){
             productDescription.setText(description);
-        }
-        private void setProductPrice(String price){
             productPrice.setText("Rs."+price+"/-");
+
+            if (!title.equals("")) {
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent productDetailsIntent = new Intent(itemView.getContext(), ProductDetailsActivity.class);
+                        itemView.getContext().startActivity(productDetailsIntent);
+                    }
+                });
+            }
         }
     }
 }

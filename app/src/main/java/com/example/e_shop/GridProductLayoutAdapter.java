@@ -54,14 +54,12 @@ public class GridProductLayoutAdapter extends BaseAdapter {
                 }
             });
 
-
             ImageView productImage = view.findViewById(R.id.h_s_product_image);
             TextView productTitle = view.findViewById(R.id.h_s_product_title);
             TextView productDescription = view.findViewById(R.id.h_s_product_description);
             TextView productPrice = view.findViewById(R.id.h_s_product_price);
 
-
-            Glide.with(parent.getContext()).load(horizontalProdutScrollModelList.get(position).getProductImage()).apply(new RequestOptions().placeholder(R.drawable.home)).into(productImage);
+            Glide.with(parent.getContext()).load(horizontalProdutScrollModelList.get(position).getProductImage()).apply(new RequestOptions().placeholder(R.drawable.placeholder_icon_1)).into(productImage);
             productTitle.setText(horizontalProdutScrollModelList.get(position).getProductTitle());
             productDescription.setText(horizontalProdutScrollModelList.get(position).getProductDescription());
             productPrice.setText("Rs."+horizontalProdutScrollModelList.get(position).getProductPrice()+"/-");
