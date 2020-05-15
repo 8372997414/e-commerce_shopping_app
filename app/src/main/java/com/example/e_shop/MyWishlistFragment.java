@@ -1,5 +1,6 @@
 package com.example.e_shop;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -25,6 +26,8 @@ public class MyWishlistFragment extends Fragment {
     }
 
     private RecyclerView wishlistRecyclerView;
+    private Dialog loadingDialog;
+    public static WishlistAdaptor wishlistAdaptor;
 
 
     @Override
@@ -33,14 +36,29 @@ public class MyWishlistFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_wishlist, container, false);
 
+        ////loading dialog
+        loadingDialog = new Dialog(getContext());
+        loadingDialog.setContentView(R.layout.loading_progress_dailog);
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setBackgroundDrawable(getContext().getDrawable(R.drawable.slider_bacgraund));
+        loadingDialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        loadingDialog.show();
+        ////loading dialog
+
         wishlistRecyclerView = view.findViewById(R.id.my_wishlist_recyclerview);
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         wishlistRecyclerView.setLayoutManager(linearLayoutManager);
 
-        List<WishlistModel> wishlistModelList = new ArrayList<>();
+        if (DBqueries.wishlistModelList.size() == 0){
+            DBqueries.wishList.clear();
+            DBqueries.loadWishList(getContext(),loadingDialog,true);
+        }else {
+            loadingDialog.dismiss();
+        }
 
-        WishlistAdaptor wishlistAdaptor = new WishlistAdaptor(wishlistModelList,true);
+        wishlistAdaptor = new WishlistAdaptor(DBqueries.wishlistModelList,true);
         wishlistRecyclerView.setAdapter(wishlistAdaptor);
         wishlistAdaptor.notifyDataSetChanged();
 
